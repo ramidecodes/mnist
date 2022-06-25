@@ -2,6 +2,7 @@ import numpy as np
 
 ### Functions for you to fill in ###
 
+
 def closed_form(X, Y, lambda_factor):
     """
     Computes the closed form solution of linear regression with L2 regularization
@@ -15,10 +16,19 @@ def closed_form(X, Y, lambda_factor):
         theta - (d + 1, ) NumPy array containing the weights of linear regression. Note that theta[0]
         represents the y-axis intercept of the model and therefore X[0] = 1
     """
-    # YOUR CODE HERE
+    identity_matrix = np.identity(X.shape[1])
+    lambda_identity_matrix = lambda_factor * identity_matrix
+
+    x_trans_x = np.dot(X.T, X)
+    x_trans_y = np.dot(X.T, Y)
+    theta = np.dot(
+        np.linalg.inv(x_trans_x + lambda_identity_matrix), x_trans_y)
+
+    return theta
     raise NotImplementedError
 
 ### Functions which are already complete, for you to use ###
+
 
 def compute_test_error_linear(test_x, Y, theta):
     test_y_predict = np.round(np.dot(test_x, theta))
