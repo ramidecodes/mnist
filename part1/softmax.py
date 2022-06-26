@@ -61,7 +61,15 @@ def compute_cost_function(X, Y, theta, lambda_factor, temp_parameter):
     Returns
         c - the cost value (scalar)
     """
-    # YOUR CODE HERE
+    H = compute_probabilities(X, theta, temp_parameter)
+
+    loss = np.mean(np.log(H[Y, range(len(Y))]))
+
+    norm_theta_squared = np.linalg.norm(theta, ord=2) ** 2
+
+    c = -(loss) + (lambda_factor/2) * norm_theta_squared
+
+    return c
     raise NotImplementedError
 
 
