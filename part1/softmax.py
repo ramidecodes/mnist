@@ -147,7 +147,9 @@ def update_y(train_y, test_y):
         test_y_mod3 - (n, ) NumPy array containing the new labels (a number between 0-2)
                     for each datapoint in the test set
     """
-    # YOUR CODE HERE
+    train_y_mod3 = np.mod(train_y, 3)
+    test_y_mod3 = np.mod(test_y,  3)
+    return (train_y_mod3, test_y_mod3)
     raise NotImplementedError
 
 
@@ -166,7 +168,10 @@ def compute_test_error_mod3(X, Y, theta, temp_parameter):
     Returns:
         test_error - the error rate of the classifier (scalar)
     """
-    # YOUR CODE HERE
+    prediction = get_classification(X, theta, temp_parameter)
+    prediction_mod3 = np.mod(prediction, 3)
+    test_error_mod3 = 1 - np.mean(Y == prediction_mod3)
+    return test_error_mod3
     raise NotImplementedError
 
 
