@@ -90,7 +90,30 @@ def run_gradient_descent_iteration(X, Y, theta, alpha, lambda_factor, temp_param
     Returns:
         theta - (k, d) NumPy array that is the final value of parameters theta
     """
-    # YOUR CODE HERE
+    n = X.shape[0]
+    probabilities = compute_probabilities(X, theta, temp_parameter)
+
+    # ones = [1] * n
+    # columns = range(n)
+    ones = np.ones(probabilities.shape[1])
+    columns = np.arange(probabilities.shape[1])
+
+    sparse_m = sparse.coo_matrix(
+        (ones, (Y, columns)),
+        shape=(probabilities.shape[0],
+               probabilities.shape[1])).toarray()
+
+    difference = sparse_m - probabilities
+
+    regularization = lambda_factor * theta
+
+    normalization = -(1/(temp_parameter * n))
+
+    cost_gradient = normalization * np.dot(difference, X) + regularization
+
+    theta_update = theta - alpha * cost_gradient
+    return theta_update
+
     raise NotImplementedError
 
 
