@@ -16,6 +16,11 @@ def project_onto_PC(X, pcs, n_components, feature_means):
     #       of the eigenvectors returned by principal_components().
     #       Note that each eigenvector is already be a unit-vector,
     #       so the projection may be done using matrix multiplication.
+
+    x_centered = X - feature_means
+    projected_x = np.dot(x_centered, pcs[:, :n_components])
+
+    return projected_x
     raise NotImplementedError
 
 
@@ -68,14 +73,17 @@ def cubic_features(X):
             new_data[i, newdata_colindex] = X_withones[i, j]**3
             newdata_colindex += 1
             for k in range(j + 1, d + 1):
-                new_data[i, newdata_colindex] = X_withones[i, j]**2 * X_withones[i, k] * (3**(0.5))
+                new_data[i, newdata_colindex] = X_withones[i,
+                                                           j]**2 * X_withones[i, k] * (3**(0.5))
                 newdata_colindex += 1
 
-                new_data[i, newdata_colindex] = X_withones[i, j] * X_withones[i, k]**2 * (3**(0.5))
+                new_data[i, newdata_colindex] = X_withones[i, j] * \
+                    X_withones[i, k]**2 * (3**(0.5))
                 newdata_colindex += 1
 
                 if k < d:
-                    new_data[i, newdata_colindex] = X_withones[i, j] * X_withones[i, k] * (6**(0.5))
+                    new_data[i, newdata_colindex] = X_withones[i,
+                                                               j] * X_withones[i, k] * (6**(0.5))
                     newdata_colindex += 1
 
     return new_data
@@ -91,7 +99,7 @@ def center_data(X):
     Returns:
         - (n, d) NumPy array X' where for each i = 1, ..., n and j = 1, ..., d:
         X'[i][j] = X[i][j] - means[j]       
-	- (d, ) NumPy array with the columns means
+        - (d, ) NumPy array with the columns means
 
     """
     feature_means = X.mean(axis=0)
@@ -123,7 +131,7 @@ def principal_components(centered_data):
     return eigen_vectors
 
 
-###Correction note:  Differing from the release, this function takes an extra input feature_means.
+# Correction note:  Differing from the release, this function takes an extra input feature_means.
 
 def plot_PC(X, pcs, labels, feature_means):
     """
@@ -133,7 +141,8 @@ def plot_PC(X, pcs, labels, feature_means):
     the corresponding image.
     labels = a numpy array containing the digits corresponding to each image in X.
     """
-    pc_data = project_onto_PC(X, pcs, n_components=2, feature_means=feature_means)
+    pc_data = project_onto_PC(X, pcs, n_components=2,
+                              feature_means=feature_means)
     text_labels = [str(z) for z in labels.tolist()]
     fig, ax = plt.subplots()
     ax.scatter(pc_data[:, 0], pc_data[:, 1], alpha=0, marker=".")
@@ -144,7 +153,7 @@ def plot_PC(X, pcs, labels, feature_means):
     plt.show()
 
 
-###Correction note:  Differing from the release, this function takes an extra input feature_means.
+# Correction note:  Differing from the release, this function takes an extra input feature_means.
 
 def reconstruct_PC(x_pca, pcs, n_components, X, feature_means):
     """
@@ -153,5 +162,6 @@ def reconstruct_PC(x_pca, pcs, n_components, X, feature_means):
     representation, x_pca.
     X = the original data to which PCA was applied to get pcs.
     """
-    x_reconstructed = np.dot(x_pca, pcs[:, range(n_components)].T) + feature_means
+    x_reconstructed = np.dot(
+        x_pca, pcs[:, range(n_components)].T) + feature_means
     return x_reconstructed
