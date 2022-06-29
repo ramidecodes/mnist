@@ -38,6 +38,7 @@ def rbf_kernel(X, Y, gamma):
         Returns:
             kernel_matrix - (n, m) Numpy array containing the kernel matrix
     """
-    kernel_matrix = kernel ** p
+    distances = np.linalg.norm((X[:, None, :] - Y[:, :]), axis=2) ** 2
+    kernel_matrix = np.exp(-gamma * distances)
     return kernel_matrix
     raise NotImplementedError
