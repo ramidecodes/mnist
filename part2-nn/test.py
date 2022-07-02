@@ -34,10 +34,27 @@ def check_basic_relu():
     log("Y: ", y)
 
 
+def check_logic_nand():
+    x_list = [[0, 0], [0, 1], [1, 0], [1, 1]]
+    nand_truth = [1, 1, 1, 0]
+
+    y_list = []
+    for x in x_list:
+        y = unit8_exe.logic_nand(x)
+        y_list.append(y)
+        log("Y: ", y)
+
+    if y_list == nand_truth:
+        log(green("PASS"), "logic_nand")
+    else:
+        log(red("FAILED"), "Import mnist project")
+
+
 def main():
-    log(green("PASS"), "Import mnist project")
+    # log(green("PASS"), "Import mnist project")
     try:
-        check_basic_relu()
+        # check_basic_relu()
+        check_logic_nand()
     except Exception:
         log_exit(traceback.format_exc())
 
