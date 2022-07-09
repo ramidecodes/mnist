@@ -125,8 +125,16 @@ def check_simple_nn():
 
     (o_1, o_2) = homework_3.simple_nn(x_1, x_2, w, w_0, v, v_01, v_02)
 
+    o_1_result = 0.9999996940977731
+    o_2_result = 3.059022269256247e-07
+
     print("O_1: ", o_1)
     print("O_2: ", o_2)
+
+    if (o_1 == o_1_result and o_2_result):
+        log(green("PASS"), "simple_nn")
+    else:
+        log(red("FAILED"), "simple_nn")
 
 
 def main():
