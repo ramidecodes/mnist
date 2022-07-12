@@ -137,12 +137,48 @@ def check_simple_nn():
         log(red("FAILED"), "simple_nn")
 
 
+def check_simple_lstm():
+    c = 0
+    h = 0
+    x_a = [0, 0, 1, 1, 1, 0]
+    x_b = [1, 1, 0, 1, 1]
+    w_fh = 0
+    w_ih = 0
+    w_oh = 0
+    w_fx = 0
+    w_ix = 100
+    w_ox = 100
+    w_ch = -100
+    w_cx = 50
+    b_f = -100
+    b_i = 100
+    b_o = 0
+    b_c = 0
+
+    h_list = []
+    h_list_answer_a = [0, 0, 1, -1, 1, 0]
+    h_list_answer_b = [1, -1, 0, 1, -1]
+
+    for x_i in x_b:
+        (c, h) = homework_3.simple_lstm(x_i, h, c, w_fh, w_fx,
+                                        w_ih, w_ix, w_oh, w_ox, w_ch, w_cx, b_f, b_i, b_o, b_c)
+        h_list.append(h)
+
+    print("H List: ", h_list)
+
+    if (h_list == h_list_answer_a or h_list == h_list_answer_b):
+        log(green("PASS"), "simple_lstm")
+    else:
+        log(red("FAILED"), "simple_lstm")
+
+
 def main():
     try:
         # check_basic_relu()
         # check_logic_nand()
         # check_pseudo_and()
-        check_simple_nn()
+        # check_simple_nn()
+        check_simple_lstm()
     except Exception:
         log_exit(traceback.format_exc())
 
