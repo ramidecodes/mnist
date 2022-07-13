@@ -49,6 +49,11 @@ def sigmoid(x):
     return sig
 
 
+def quadratic_loss(y, t):
+    c = ((y - t) ** 2) / 2
+    return c
+
+
 def simple_lstm(x, h, c, w_fh, w_fx, w_ih, w_ix, w_oh, w_ox, w_ch, w_cx, b_f, b_i, b_o, b_c):
 
     f = sigmoid(w_fh * h + w_fx * x + b_f)
@@ -60,3 +65,19 @@ def simple_lstm(x, h, c, w_fh, w_fx, w_ih, w_ix, w_oh, w_ox, w_ch, w_cx, b_f, b_
     h = o * np.tanh(c)
 
     return (c, round(h))
+
+
+def two_layer_nn(t, x, w_1, w_2, b):
+    z_1 = w_1 * x
+    a_1 = relu(z_1)
+    z_2 = w_2 * a_1 + b
+    y = sigmoid(z_2)
+    c = quadratic_loss(y, t)
+    return c
+
+
+def simple_convolutional_nn(f, g):
+    conv_full = np.convolve(f, g)
+    conv_valid = np.convolve(f, g, "valid")  # No padding
+    conv_same = np.convolve(f, g, "same")  # Using padding
+    return (conv_full, conv_valid, conv_same)
