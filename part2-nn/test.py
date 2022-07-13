@@ -187,21 +187,35 @@ def check_two_layer_nn():
 def check_simple_convolutional_nn():
     f = np.array([1, 3, -1, 1, -3])
     g = np.array([-1, 0, 1])
-    # f = np.array([[1, 2, 1], [2, 1, 1], [1, 1, 1]])
-    # g = np.array([[1, 0.5], [0.5, 1]])
 
-    (conv_full, conv_valid, conv_same) = homework_3.simple_convolutional_nn(f, g)
+    (conv_valid, conv_same) = homework_3.simple_convolutional_nn(f, g)
 
     conv_no_padding = np.array([2, 2, 2])
     conv_padding = np.array([-3, 2, 2, 2, 1])
 
-    # print("Convolution Full: ", conv_full)
-    print("Convolution Valid: ", conv_valid)
+    print("Convolution Valid: ", conv_valid)  # No Padding
     print("Convolution No padding: ", conv_no_padding)
-    print("Convolution Same: ", conv_same)
+    print("Convolution Same: ", conv_same)  # With 0 Padding
     print("Convolution Padding: ", conv_padding)
 
     if (np.array_equal(conv_valid, conv_no_padding) and np.array_equal(conv_same, conv_padding)):
+        log(green("PASS"), "simple_lstm")
+    else:
+        log(red("FAILED"), "simple_lstm")
+
+
+def check_conv2d_sum():
+    f = np.array([[1, 2, 1], [2, 1, 1], [1, 1, 1]])
+    g = np.array([[1, 0.5], [0.5, 1]])
+    answer = 15.
+
+    (conv) = homework_3.conv2d(f, g)
+    conv_sum = sum(sum(conv))
+
+    print("Convolution Valid: ", conv)  # No Padding
+    print("Convolution SUM: ", conv_sum)
+
+    if (conv_sum == answer):
         log(green("PASS"), "simple_lstm")
     else:
         log(red("FAILED"), "simple_lstm")
@@ -215,7 +229,8 @@ def main():
         # check_simple_nn()
         # check_simple_lstm()
         # check_two_layer_nn()
-        check_simple_convolutional_nn()
+        # check_simple_convolutional_nn()
+        check_conv2d_sum()
     except Exception:
         log_exit(traceback.format_exc())
 

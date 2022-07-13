@@ -1,5 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
+from scipy import signal
+from torch import conv2d
 
 
 def relu(z):
@@ -77,7 +79,11 @@ def two_layer_nn(t, x, w_1, w_2, b):
 
 
 def simple_convolutional_nn(f, g):
-    conv_full = np.convolve(f, g)
     conv_valid = np.convolve(f, g, "valid")  # No padding
     conv_same = np.convolve(f, g, "same")  # Using padding
-    return (conv_full, conv_valid, conv_same)
+    return (conv_valid, conv_same)
+
+
+def conv2d(f, g):
+    conv = signal.convolve2d(f, g, "valid")
+    return conv
