@@ -207,6 +207,7 @@ def check_simple_convolutional_nn():
 def check_conv2d_sum():
     f = np.array([[1, 2, 1], [2, 1, 1], [1, 1, 1]])
     g = np.array([[1, 0.5], [0.5, 1]])
+
     answer = 15.
 
     (conv) = homework_3.conv2d(f, g)
@@ -221,6 +222,21 @@ def check_conv2d_sum():
         log(red("FAILED"), "simple_lstm")
 
 
+def check_simple_cnn():
+    i = np.array([[1, 0, 2], [3, 1, 0], [0, 0, 4]])
+    f = np.array([[1, 0], [0, 1]])
+
+    conv_result = homework_3.simple_cnn(i, f)
+    answer = 5
+
+    print("CNN Result: ", conv_result)
+
+    if (conv_result == answer):
+        log(green("PASS"), "simple_lstm")
+    else:
+        log(red("FAILED"), "simple_lstm")
+
+
 def main():
     try:
         # check_basic_relu()
@@ -230,7 +246,8 @@ def main():
         # check_simple_lstm()
         # check_two_layer_nn()
         # check_simple_convolutional_nn()
-        check_conv2d_sum()
+        # check_conv2d_sum()
+        check_simple_cnn()
     except Exception:
         log_exit(traceback.format_exc())
 

@@ -87,3 +87,9 @@ def simple_convolutional_nn(f, g):
 def conv2d(f, g):
     conv = signal.convolve2d(f, g, "valid")
     return conv
+
+
+def simple_cnn(i, f):
+    conv = signal.convolve2d(i, f, "valid")
+    relu_conv = np.amax(conv)
+    return relu_conv
