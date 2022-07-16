@@ -21,10 +21,10 @@ class CNN(nn.Module):
         # TODO initialize model layers here
         self.conv1 = nn.Sequential(
             nn.Conv2d(1, 32, (3, 3)),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.MaxPool2d((2, 2)),
             nn.Conv2d(32, 64, (3, 3)),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.MaxPool2d((2, 2)),
             Flatten(),
             nn.Linear(2880, 128),
@@ -33,10 +33,10 @@ class CNN(nn.Module):
         )
         self.conv2 = nn.Sequential(
             nn.Conv2d(1, 32, (3, 3)),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.MaxPool2d((2, 2)),
             nn.Conv2d(32, 64, (3, 3)),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.MaxPool2d((2, 2)),
             Flatten(),
             nn.Linear(2880, 128),
