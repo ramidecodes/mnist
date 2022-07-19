@@ -129,7 +129,7 @@ def check_closed_form():
     Y = np.arange(1, 4)
     lambda_factor = 0.5
     exp_res = np.array(
-        [-0.03411225,  0.00320187,  0.04051599,  0.07783012,  0.11514424])
+        [-0.03411225, 0.00320187, 0.04051599, 0.07783012, 0.11514424])
     if check_array(
             ex_name, linear_regression.closed_form,
             exp_res, X, Y, lambda_factor):
@@ -215,13 +215,13 @@ def check_run_gradient_descent_iteration():
     lambda_factor = 0.5
     exp_res = np.zeros((k, d))
     exp_res = np.array([
-        [-7.14285714,  -5.23809524,  -3.33333333,  -1.42857143, 0.47619048],
-        [9.52380952,  11.42857143,  13.33333333,  15.23809524, 17.14285714],
-        [26.19047619,  28.0952381,  30.,  31.9047619, 33.80952381],
-        [-7.14285714,  -8.57142857, -10., -11.42857143, -12.85714286],
-        [-7.14285714,  -8.57142857, -10., -11.42857143, -12.85714286],
-        [-7.14285714,  -8.57142857, -10., -11.42857143, -12.85714286],
-        [-7.14285714,  -8.57142857, -10., -11.42857143, -12.85714286]
+        [-7.14285714, -5.23809524, -3.33333333, -1.42857143, 0.47619048],
+        [9.52380952, 11.42857143, 13.33333333, 15.23809524, 17.14285714],
+        [26.19047619, 28.0952381, 30., 31.9047619, 33.80952381],
+        [-7.14285714, -8.57142857, -10., -11.42857143, -12.85714286],
+        [-7.14285714, -8.57142857, -10., -11.42857143, -12.85714286],
+        [-7.14285714, -8.57142857, -10., -11.42857143, -12.85714286],
+        [-7.14285714, -8.57142857, -10., -11.42857143, -12.85714286]
     ])
 
     if check_array(
@@ -323,10 +323,22 @@ def check_rbf_kernel():
     log(green("PASS"), ex_name, "")
 
 
+def check_svm_quadratic_kernel():
+    dataset = np.array([[0, 0], [2, 0], [1, 1], [0, 2], [3, 3], [
+                       4, 1], [5, 2], [1, 4], [4, 4], [5, 5]])
+    labels = [-1, -1, -1, -1, -1, 1, 1, 1, 1, 1]
+    mistakes = [1, 65, 11, 31, 72, 30, 0, 21, 4, 15]
+
+    (theta_0, theta) = kernel.svm_quadratic_kernel(dataset, labels, mistakes)
+
+    print("Theta 0: ", theta_0)
+    print("Theta: ", theta)
+
+
 def main():
     log(green("PASS"), "Import mnist project")
     try:
-        check_get_mnist()
+        # check_get_mnist()
         # check_closed_form()
         # check_svm()
         # check_compute_probabilities()
@@ -334,8 +346,9 @@ def main():
         # check_run_gradient_descent_iteration()
         # check_update_y()
         # check_project_onto_PC()
-        check_polynomial_kernel()
-        check_rbf_kernel()
+        # check_polynomial_kernel()
+        # check_rbf_kernel()
+        check_svm_quadratic_kernel()
     except Exception:
         log_exit(traceback.format_exc())
 

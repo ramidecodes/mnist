@@ -42,3 +42,27 @@ def rbf_kernel(X, Y, gamma):
     kernel_matrix = np.exp(-gamma * distances)
     return kernel_matrix
     raise NotImplementedError
+
+
+def quadratic_kernel(x):
+    return np.array([x[0]**2, np.sqrt(2) * x[0] * x[1], x[1]**2])
+
+
+def svm_quadratic_kernel(dataset, labels, mistakes):
+    w = np.zeros(4)
+    kernel_data = []
+
+    for x in map(quadratic_kernel, dataset):
+        kernel_data.append(x)
+
+    np_kernel_data = np.array(kernel_data)
+
+    t_data = np.hstack([np.ones(dataset.shape[0]).reshape(
+        dataset.shape[0], 1), np_kernel_data])
+
+    for i in range(dataset.shape[0]):
+        w = w + mistakes[i] * labels[i] * t_data[i]
+
+    theta_0 = w[0]
+    theta = w[1:]
+    return (theta_0, theta)
